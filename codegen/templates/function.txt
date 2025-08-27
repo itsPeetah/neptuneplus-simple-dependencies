@@ -1,0 +1,61 @@
+apiVersion: openfaas.com/v1
+kind: Function
+metadata:
+  name: __FUNCTION_NAME__
+  namespace: openfaas-fn
+spec:
+  image: __FUNCTION_IMAGE__
+  labels:
+    com.openfaas.scale.factor: "20"
+    com.openfaas.scale.max: "100"
+    com.openfaas.scale.min: "1"
+    com.openfaas.scale.zero: "false"
+    edgeautoscaler.polimi.it/scheduler: edge-autoscaler
+  limits:
+    cpu: 200m
+    memory: 1000Mi
+  name: __FUNCTION_NAME__
+  readOnlyRootFilesystem: false
+  requests:
+    cpu: 200m
+    memory: 1000Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: __FUNCTION_NAME__
+    namespace: openfaas-fn
+  name: __FUNCTION_NAME__
+  namespace: openfaas-fn
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    edgeautoscaler.polimi.it/function-name: __FUNCTION_NAME__
+    edgeautoscaler.polimi.it/function-namespace: openfaas-fn
+---
+apiVersion: systemautoscaler.polimi.it/v1beta1
+kind: ServiceLevelAgreement
+metadata:
+  name: __FUNCTION_NAME__
+  namespace: openfaas-fn
+spec:
+  defaultResources:
+    cpu: 300m
+    memory: 768Mi
+  maxResources:
+    cpu: 20000m
+    memory: 2048Mi
+  metric:
+    responseTime: 100m
+  minResources:
+    cpu: 300m
+    memory: 10Mi
+  recommenderLogic: dependencyAware
+  service:
+    container: __FUNCTION_NAME__
+    selector:
+      matchLabels:
+        name: __FUNCTION_NAME__

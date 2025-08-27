@@ -1,0 +1,54 @@
+apiVersion: neptuneplus.polimi.it/v1alpha1
+kind: DependencyGraph
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: depdag-controller
+  name: simple-dependencies-parallel
+  namespace: openfaas-fn
+spec:
+  nodes:
+    - functionName: caller-parallel
+      functionNamespace: openfaas-fn
+      invocations:
+        - edgeId: 1
+          edgeMultiplier: 1
+          functionName: waiter-1
+          functionNamespace: openfaas-fn
+        - edgeId: 1
+          edgeMultiplier: 1
+          functionName: waiter-2
+          functionNamespace: openfaas-fn
+        - edgeId: 1
+          edgeMultiplier: 1
+          functionName: waiter-3
+          functionNamespace: openfaas-fn
+        - edgeId: 1
+          edgeMultiplier: 1
+          functionName: waiter-4
+          functionNamespace: openfaas-fn
+        - edgeId: 1
+          edgeMultiplier: 1
+          functionName: waiter-5
+          functionNamespace: openfaas-fn
+      nominalResponseTime: 100m
+    - functionName: waiter-1
+      functionNamespace: openfaas-fn
+      invocations: []
+      nominalResponseTime: 1000m
+    - functionName: waiter-2
+      functionNamespace: openfaas-fn
+      invocations: []
+      nominalResponseTime: 2000m
+    - functionName: waiter-3
+      functionNamespace: openfaas-fn
+      invocations: []
+      nominalResponseTime: 3000m
+    - functionName: waiter-4
+      functionNamespace: openfaas-fn
+      invocations: []
+      nominalResponseTime: 4000m
+    - functionName: waiter-5
+      functionNamespace: openfaas-fn
+      invocations: []
+      nominalResponseTime: 5000m
