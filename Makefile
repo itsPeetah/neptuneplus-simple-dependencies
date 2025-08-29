@@ -47,9 +47,9 @@ manifest-function-caller-%:
 release: buildall pushall
 
 deploy:
-	kubectl apply -f ./config
+	kubectl apply -f ./config/deploy
 
 undeploy:
-	kubectl delete -f ./config
+	kubectl delete -f ./config/deploy
 
 redeploy: undeploy deploy
