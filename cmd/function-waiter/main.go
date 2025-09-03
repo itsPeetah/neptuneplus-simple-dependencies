@@ -21,7 +21,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("Sleeping for %d seconds...", delay)
 
-	delayDuration := time.Duration(delay) * time.Second
+	delayDuration := time.Duration(delay) * time.Second / 2
 	time.Sleep(delayDuration)
 
 	fmt.Fprintf(w, "Slept for %d seconds.\n", delay)
