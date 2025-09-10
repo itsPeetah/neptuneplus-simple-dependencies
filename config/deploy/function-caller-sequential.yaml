@@ -4,7 +4,7 @@ metadata:
   name: caller-sequential
   namespace: openfaas-fn
 spec:
-  image: itspeetah/neptuneplus-simple-dependencies-sequential
+  image: itspeetah/neptuneplus-simple-dependencies:sequential
   labels:
     com.openfaas.scale.factor: "20"
     com.openfaas.scale.max: "100"

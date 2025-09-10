@@ -8,7 +8,7 @@ metadata:
   namespace: openfaas-fn
 spec:
   nodes:
-    - functionName: caller-parallel
+    - functionName: caller-sequential
       functionNamespace: openfaas-fn
       invocations:
         - edgeId: 1
@@ -31,24 +31,24 @@ spec:
           edgeMultiplier: 1
           functionName: waiter-5
           functionNamespace: openfaas-fn
-      nominalResponseTime: 100m
+      nominalResponseTime: 10m
     - functionName: waiter-1
       functionNamespace: openfaas-fn
       invocations: []
-      nominalResponseTime: 1000m
+      nominalResponseTime: 100m
     - functionName: waiter-2
       functionNamespace: openfaas-fn
       invocations: []
-      nominalResponseTime: 2000m
+      nominalResponseTime: 200m
     - functionName: waiter-3
       functionNamespace: openfaas-fn
       invocations: []
-      nominalResponseTime: 3000m
+      nominalResponseTime: 300m
     - functionName: waiter-4
       functionNamespace: openfaas-fn
       invocations: []
-      nominalResponseTime: 4000m
+      nominalResponseTime: 400m
     - functionName: waiter-5
       functionNamespace: openfaas-fn
       invocations: []
-      nominalResponseTime: 5000m
+      nominalResponseTime: 500m

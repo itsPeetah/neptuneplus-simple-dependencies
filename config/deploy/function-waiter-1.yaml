@@ -4,7 +4,7 @@ metadata:
   name: waiter-1
   namespace: openfaas-fn
 spec:
-  image: itspeetah/neptuneplus-simple-dependencies-waiter
+  image: itspeetah/neptuneplus-simple-dependencies:waiter
   labels:
     com.openfaas.scale.factor: "20"
     com.openfaas.scale.max: "100"
@@ -46,12 +46,12 @@ spec:
     cpu: 300m
     memory: 768Mi
   maxResources:
-    cpu: 20000m
+    cpu: 2000m
     memory: 2048Mi
   metric:
     responseTime: 100m
   minResources:
-    cpu: 300m
+    cpu: 50m
     memory: 10Mi
   recommenderLogic: dependencyAware
   service:

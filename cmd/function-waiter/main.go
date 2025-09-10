@@ -11,6 +11,7 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
+	t0 := time.Now()
 	log.Printf("Function waiter received a request from %s", r.RemoteAddr)
 
 	q := r.URL.Query()
@@ -19,20 +20,21 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		delay = 1
 	}
 
-	log.Printf("Sleeping for %d seconds...", delay)
+	log.Printf("Sleeping for %d00ms...", delay)
 
-	delayDuration := time.Duration(delay) * time.Second / 2
+	delayDuration := time.Duration(delay) * (time.Millisecond * 100)
 	time.Sleep(delayDuration)
 
-	fmt.Fprintf(w, "Slept for %d seconds.\n", delay)
+	diff := time.Now().UnixMilli() - t0.UnixMilli()
+	fmt.Fprintf(w, "Slept for %d00ms (%dms).\n", delay, diff)
 }
 
 func main() {
 	http.HandleFunc("/call", handler)
 	http.HandleFunc(common.ROUTE_READY, common.HandleReady)
 	http.HandleFunc(common.ROUTE_HEALTH, common.HandleHealth)
-	log.Printf("Function W2 server starting on port %d", 8080)
+	log.Printf("Function waiter starting on port %d", 8080)
 	if err := http.ListenAndServe(fmt.Sprintf(":%d", 8080), nil); err != nil {
-		log.Fatalf("Function W2 server failed to start: %v", err)
+		log.Fatalf("Function waiter failed to start: %v", err)
 	}
 }
